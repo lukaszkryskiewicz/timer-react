@@ -5,34 +5,36 @@ import { useState, useEffect } from "react";
 
 function App() {
 
-  const [timer, setTimer] = useState('')
+  const [timer, setTimer] = useState(null)
   const [time, setTime] = useState(0)
 
   const start = () => {
-    setTimer(setInterval(() => {
-      setTime(prevValue => prevValue + 1);
-    }, 1))
+    if (!timer) {
+      setTimer(setInterval(() => {
+        setTime(prevValue => prevValue + 1);
+      }, 1))
+    }
   };
 
   useEffect(() => {
     return () => {
       if (timer) clearInterval(timer);
     };
-  }, [timer]);
+  }, []);
 
   const startTimer = () => {
     start();
   }
 
   const stopTimer = () => {
-    console.log('test1')
     clearInterval(timer)
+    setTimer(null)
   }
 
   const restartTimer = () => {
-    console.log('test2')
     clearInterval(timer)
     setTime(0)
+    setTimer(null)
   }
 
 
